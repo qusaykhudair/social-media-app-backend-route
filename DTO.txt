@@ -1,0 +1,32 @@
+// DTO => data transfer object
+
+// what is data transfer object?
+// data transfer object is a object that is used to transfer data between two layers of an application.
+// in other words, it is a object that is used to transfer data between the client and the server.
+// it is also used to transfer data between the server and the database.
+// why we use data transfer object?
+// 1. To separate the layers of the application.
+// 2. To make the code more readable.
+// 3. To make the code more maintainable.
+// 4. To make the code more testable.
+// 5. To make the code more scalable.
+// 6. To make the code more secure.
+// 7. To make the code more efficient.
+// 8. To make the code more reliable.
+// 9. To make the code more user-friendly.
+// 10. To make the code more accessible.
+// 11. To make the code more reusable.
+// 12. To make the code more flexible.
+// 13. To make the code more robust.
+// 14. To make the code more maintainable.
+// 15. To make the code more testable.
+// 16. To make the code more scalable.
+// 17. To make the code more secure.
+// 18. To make the code more efficient.
+// 19. To make the code more reliable.
+// 20. To make the code more user-friendly.
+// 21. To make the code more accessible.
+// 22. To make the code more reusable.
+// 23. To make the code more flexible.
+// 24. To make the code more robust
+// 25. To make the code more testable.
