@@ -28,3 +28,14 @@ export enum ON_MODEL {
     reel = "Reel",
     story = "Story",
 }
+
+export enum RELATIONSHIP_TYPE{
+    son = "son",
+    daughter = "daughter",
+     brother = "brother",
+    sister = "sister",
+    father = "father",
+    mother = "mother",
+    husband = "husband",
+    wife = "wife",
+}

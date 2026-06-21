@@ -5,6 +5,7 @@ import { radisConnect } from "./DB/redis";
 import authRouter from "./module/auth/auth.controller"
 import postRouter from "./module/post/post.controller"
 import commentRouter from "./module/comment/comment.controller"
+import requestRouter from "./module/request/requset.controller"
 const app = express();
 
 export async function bootstrap() {
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use("/auth", authRouter);
 app.use("/post", postRouter);
 app.use("/comment", commentRouter);
+app.use("/request", requestRouter);
 
  // erorr handeling 
 app.use((erorr:Error ,req: Request, res: Response, next: NextFunction) => {

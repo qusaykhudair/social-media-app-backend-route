@@ -1,8 +1,6 @@
-import { IUser } from "./user.interface";
+import { Types } from "mongoose";
 
-// re-open 
-declare module 'express-serve-static-core' {
-    export interface Request {
-        user:IUser;
-    }
+export interface IRequest {
+    sender: Types.ObjectId;
+    receiver: Types.ObjectId;
 }
