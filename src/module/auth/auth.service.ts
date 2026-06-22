@@ -1,18 +1,25 @@
 import { it } from "node:test";
-import { UserRepository } from "../../DB/models/user/user.repo";
+import { userRepository, UserRepository } from "../../DB/models/user/user.repo";
 import { redisClient } from "../../DB/redis";
-import { hashPassword } from "../../utils/bcrypt.utils";
-import { encryption } from "../../utils/crypto.utils";
-import { sendEmail } from "../../utils/email.utils";
-import { BadRequestException, ConflictException, NotFoundException } from "../../utils/erorr.utils";
-import { generateOTP } from "../../utils/oto.utils";
+import { hashPassword } from "../../common/utils/bcrypt.utils";
+import { encryption } from "../../common/utils/crypto.utils";
+import { sendEmail } from "../../common/utils/email.utils";
+import { BadRequestException, ConflictException, NotFoundException } from "../../common/utils/erorr.utils";
+import { generateOTP } from "../../common/utils/oto.utils";
 import { forgetPasswordDTO, ForgetPasswordDto, LoginDto, ResetPasswordDto, sendOtpDTO, SignupDTO, verifyAccountDTO } from "./auth.dto";
 import { email } from "zod";
+import { IMailProvider } from "../../common/email/mail.interface";
+import { NodeMailerProvider } from "../../common/email/nodemailer/nodemailer.service";
+import { nodemailerProvider } from "../../common/email/nodemailer/init";
 
 class AuthService {
-    private userRepository: UserRepository
-    constructor() {
-        this.userRepository = new UserRepository();
+
+    private userRepository: UserRepository;
+    private mailProvider: IMailProvider;
+
+    constructor(userRepository: UserRepository, mailProvider: IMailProvider) {
+        this.userRepository = userRepository;
+        this.mailProvider = mailProvider;
     }
     async signup(signupDTO: SignupDTO) {
         const { email } = signupDTO
@@ -28,7 +35,7 @@ class AuthService {
         // send OTP
         const otp = generateOTP();
         // send email
-        await sendEmail({ to: signupDTO.email, subject: "Confirm Email", html: `<h1> Your OTP is ${otp} </h1> <h2>This code is valid for 3 minutes </h2>` })
+        await this.mailProvider.send(signupDTO.email, "Confirm Email", "<h1> Your OTP is ${otp} </h1> <h2>This code is valid for 3 minutes </h2>");
         // save OTP into radis ( three minutes)
         await redisClient.set(`${signupDTO.email}:otp`, otp, { EX: 3 * 60 });
 
@@ -104,4 +111,4 @@ class AuthService {
     }
 }
 
-export default new AuthService();
+export default new AuthService(userRepository, nodemailerProvider);

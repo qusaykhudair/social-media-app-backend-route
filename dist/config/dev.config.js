@@ -1,7 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.REDIS_URL = exports.USER_PASS = exports.USER_EMAIL = exports.DB_URL = void 0;
+exports.BUCKET_SESSION_TOKEN = exports.BUCKET_SECRET_ACCESS_KEY = exports.BUCKET_ACCESS_KEY_ID = exports.BUCKET_REGION = exports.BUCKET_NAME = exports.REDIS_URL = exports.USER_PASS = exports.USER_EMAIL = exports.DB_URL = void 0;
 exports.DB_URL = process.env.DB_URL;
 exports.USER_EMAIL = process.env.USER_EMAIL;
 exports.USER_PASS = process.env.USER_PASS;
 exports.REDIS_URL = process.env.REDIS_URL;
+exports.BUCKET_NAME = process.env.BUCKET_NAME;
+exports.BUCKET_REGION = process.env.BUCKET_REGION;
+exports.BUCKET_ACCESS_KEY_ID = process.env.BUCKET_ACCESS_KEY_ID;
+exports.BUCKET_SECRET_ACCESS_KEY = process.env.BUCKET_SECRET_ACCESS_KEY;
+exports.BUCKET_SESSION_TOKEN = process.env.BUCKET_SESSION_TOKEN;

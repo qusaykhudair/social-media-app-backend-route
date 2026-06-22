@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.commentService = void 0;
 const comment_repo_1 = require("../../DB/models/comment/comment.repo");
 const post_repo_1 = require("../../DB/models/posts/post.repo");
-const erorr_utils_1 = require("../../utils/erorr.utils");
+const erorr_utils_1 = require("../../common/utils/erorr.utils");
 class CommentService {
     postRepo;
     commentRepo;

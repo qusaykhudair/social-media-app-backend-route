@@ -2,15 +2,18 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const user_repo_1 = require("../../DB/models/user/user.repo");
 const redis_1 = require("../../DB/redis");
-const bcrypt_utils_1 = require("../../utils/bcrypt.utils");
-const crypto_utils_1 = require("../../utils/crypto.utils");
-const email_utils_1 = require("../../utils/email.utils");
-const erorr_utils_1 = require("../../utils/erorr.utils");
-const oto_utils_1 = require("../../utils/oto.utils");
+const bcrypt_utils_1 = require("../../common/utils/bcrypt.utils");
+const crypto_utils_1 = require("../../common/utils/crypto.utils");
+const email_utils_1 = require("../../common/utils/email.utils");
+const erorr_utils_1 = require("../../common/utils/erorr.utils");
+const oto_utils_1 = require("../../common/utils/oto.utils");
+const init_1 = require("../../common/email/nodemailer/init");
 class AuthService {
     userRepository;
-    constructor() {
-        this.userRepository = new user_repo_1.UserRepository();
+    mailProvider;
+    constructor(userRepository, mailProvider) {
+        this.userRepository = userRepository;
+        this.mailProvider = mailProvider;
     }
     async signup(signupDTO) {
         const { email } = signupDTO;
@@ -27,7 +30,7 @@ class AuthService {
         // send OTP
         const otp = (0, oto_utils_1.generateOTP)();
         // send email
-        await (0, email_utils_1.sendEmail)({ to: signupDTO.email, subject: "Confirm Email", html: `<h1> Your OTP is ${otp} </h1> <h2>This code is valid for 3 minutes </h2>` });
+        await this.mailProvider.send(signupDTO.email, "Confirm Email", "<h1> Your OTP is ${otp} </h1> <h2>This code is valid for 3 minutes </h2>");
         // save OTP into radis ( three minutes)
         await redis_1.redisClient.set(`${signupDTO.email}:otp`, otp, { EX: 3 * 60 });
         // create user into radis ( three days)
@@ -97,4 +100,4 @@ class AuthService {
     async logout() {
     }
 }
-exports.default = new AuthService();
+exports.default = new AuthService(user_repo_1.userRepository, init_1.nodemailerProvider);

@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const request_repo_1 = require("../../DB/models/request/request.repo");
-const erorr_utils_1 = require("../../utils/erorr.utils");
+const erorr_utils_1 = require("../../common/utils/erorr.utils");
 const user_friend_repo_1 = require("../../DB/models/user-friend/user-friend.repo");
 class RequestService {
     userFriendRepo;

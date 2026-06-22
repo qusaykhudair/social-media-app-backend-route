@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.isValid = void 0;
-const erorr_utils_1 = require("../utils/erorr.utils");
+const erorr_utils_1 = require("../common/utils/erorr.utils");
 //  this is the validation middleware 
 // it is used to validate the request body
 // it is used to validate the request params

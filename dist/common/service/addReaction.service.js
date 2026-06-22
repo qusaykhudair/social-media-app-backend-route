@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.addReactionService = void 0;
-const erorr_utils_1 = require("../../utils/erorr.utils");
+const erorr_utils_1 = require("../utils/erorr.utils");
 const enums_1 = require("../enums");
 const user_reaction_repo_1 = require("../../DB/models/user-reaction/user-reaction.repo");
 const post_repo_1 = require("../../DB/models/posts/post.repo");

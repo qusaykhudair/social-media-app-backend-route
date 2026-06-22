@@ -1,8 +1,8 @@
 import nodemailer from "nodemailer";
 import { MailOptions } from "nodemailer/lib/json-transport";
-import { USER_EMAIL, USER_PASS } from "../config/dev.config";
+import { USER_EMAIL, USER_PASS } from "../../config/dev.config";
 
-export const sendEmail = async ({ to, subject, html }:MailOptions) => {
+export const sendEmail = async ({ to, subject, html }: MailOptions) => {
     // Creating a more robust transporter for Gmail
     const transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",

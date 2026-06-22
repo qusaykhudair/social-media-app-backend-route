@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
 import { AddReactionDTO } from "../../module/post/post.dto";
-import { BadRequestException } from "../../utils/erorr.utils";
+import { BadRequestException } from "../utils/erorr.utils";
 import { ON_MODEL } from "../enums";
 import { UserReactionRepo } from "../../DB/models/user-reaction/user-reaction.repo";
 import { PostRepo } from "../../DB/models/posts/post.repo";
