@@ -1,7 +1,7 @@
 import { BUCKET_NAME } from "../../../config/dev.config";
 import { ICloudProvider } from "../cloud.interface";
 import { DeleteObjectCommand, GetObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
-
+import {getSignedUrl} from "@aws-sdk/s3-request-presigner"
 
 interface S3Config {
  region : string,
@@ -22,7 +22,7 @@ export class S3CloudProvider implements ICloudProvider {
             }
         })
     }
-    async uploadFile(file: Express.Multer.File, path: string):Promise<string> {
+    async uploadFile(file: Express.Multer.File, path: string):Promise<{url:string,key:string}> {
 // upload images to s3
         let command=new PutObjectCommand({
     Bucket:BUCKET_NAME,
@@ -32,7 +32,12 @@ export class S3CloudProvider implements ICloudProvider {
     Body: file.buffer
 })
       await this.client.send(command)
-      return command.input.Key as string ;
+let url = await getSignedUrl(this.client,command,{expiresIn : 1800}) // 30 minutes
+        // url : this is a temporary url and can be used to access the file for 30 minutes only
+        return {
+          url,
+          key: command.input.Key as string
+        }
     }
 
     async deleteFile(key: string): Promise<boolean | undefined> {

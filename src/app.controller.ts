@@ -6,9 +6,15 @@ import authRouter from "./module/auth/auth.controller"
 import postRouter from "./module/post/post.controller"
 import commentRouter from "./module/comment/comment.controller"
 import requestRouter from "./module/request/requset.controller"
+import userRouter from "./module/user/user.controller"
 import { s3CloudProvider } from "./common/cloud/S3/init";
 import{pipeline} from "node:stream"
 import { promisify } from "node:util";
+import { GraphQLObjectType, GraphQLString } from "graphql";
+import { UserType } from "./module/user/graphQl/user.type";
+import { PostType } from "./module/post/graphQL/post.typs";
+import { postMutation, postQuery } from "./module/post/graphQL/post.gql";
+import { userMutation, userQuery } from "./module/user/graphQl/user.gql";
 
 const pipelinePromise= promisify(pipeline)
 const app = express();
@@ -28,6 +34,21 @@ await pipelinePromise(fileReadStream,res)
  // DB Connection 
     dbConnection();
     radisConnect();
+   let query = new GraphQLObjectType({
+    name : "RootQuery",
+    fields :{
+       ...userQuery,
+       ... postQuery
+    }
+   })
+
+   let mutation = new GraphQLObjectType({
+    name : "RootMutation",
+    fields :{  
+       ...userMutation ,
+       ... postMutation
+    }
+   })
     app.use(express.json());
 
     // routes
@@ -35,7 +56,7 @@ await pipelinePromise(fileReadStream,res)
     app.use("/post", postRouter);
     app.use("/comment", commentRouter);
     app.use("/request", requestRouter);
-
+    app.use("/user", userRouter);
     // erorr handeling 
     app.use((erorr: Error, req: Request, res: Response, next: NextFunction) => {
         return res.status(erorr.cause as number || 500).json({
